@@ -1,6 +1,7 @@
 package com.example.coverupdownfragment
 
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -33,8 +34,28 @@ lateinit var RootView:View
         RootView.flipNextConstraintLayout.setOnClickListener {
             Toast.makeText(this.context,"下一頁",Toast.LENGTH_SHORT).show()
         }
+        RootView.orientationImageView.setOnClickListener {
+            if (activity!!.requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+                activity!!.requestedOrientation=ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                RootView.showImageView.setImageResource(R.drawable.comic)
+
+            }
+            else if (activity!!.requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+                activity!!.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                RootView.showImageView.setImageResource(R.drawable.comic2)
+            }
+        }
         return RootView
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (activity!!.requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+            RootView.showImageView.setImageResource(R.drawable.comic2)
 
+        }
+        else if (activity!!.requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+            RootView.showImageView.setImageResource(R.drawable.comic)
+        }
+    }
 }
